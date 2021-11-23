@@ -39,15 +39,17 @@
         echo "<td><h1>Add User</h1></td>";
         echo "<td><p><a href='admin_home.php'>Back</a></p></td>";
         echo "<tr><td><b>Fill Up Form</b></td></tr>";
-        echo "<tr><td><p><b>First Name: <input type='text' name='firstname'><br></b></p></td></tr>";
-        echo "<tr><td><p><b>Middle Name: <input type='text' name='middlename'><br></b></p></td></tr>";
-        echo "<tr><td><p><b>Last Name: <input type='text' name='lastname'><br></b></p></td></tr>";
-        echo "<tr><td><p><b>Username: <input type='text' name='username'><br></b></p></td></tr>";
-        echo "<tr><td><p><b>Password: <input type='password' name='password'><br></b></p></td></tr>";
-        echo "<tr><td><p><b>Confirm Password: <input type='password' name='cpassword'><br></b></p></td></tr>";
-        echo "<tr><td><p><b>Birthday: <input type='date' name='birthday'><br></b></p></td></tr>";
-        echo "<tr><td><p><b>Email: <input type='email' name='email'><br></b></p></td></tr>";
-        echo "<tr><td><p><b>Contact Number: <input type='number' name='contact'><br></b></p></td></tr>";
+        echo "<tr><td><p><b>First Name: <input type='text' name='firstname' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Middle Name: <input type='text' name='middlename' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Last Name: <input type='text' name='lastname' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Username: <input type='text' name='username' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Password: <input type='password' name='password' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Confirm Password: <input type='password' name='cpassword' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Birthday: <input type='date' name='birthday' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Email: <input type='email' name='email' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Contact Number: <input type='number' name='contact' required><br></b></p></td></tr>";
+        echo "<tr><td><p><b>Access Level: </b><input type='radio' name='accesslvl' id='admin' value='admin'><label for='admin'>admin</label><input type='radio' name='accesslvl' id='user' value='user'><label for='user'>user</label><br></p></td></tr>";
+        echo "<tr><td><p><b>Status: </b><input type='radio' name='status' id='active' value='active'><label for='active'>active</label><input type='radio' name='status' id='disable' value='disable'><label for='disable'>disable</label><br></p></td></tr>";
         echo "<tr><td><p><button type='submit'>Submit</button></td></tr>";
         echo "</table>";
 
@@ -62,32 +64,35 @@
             $birthday = $_POST['birthday'];
             $email = $_POST['email'];
             $contact = $_POST['contact'];
+            $accesslvl = $_POST['accesslvl'];
+            $status = $_POST['status'];
 
             $conn = mysqli_connect('localhost','root','','ta4');
-
-            if (empty($firstname))
-            {
-                error_reporting(0);
-            }
 
             if($conn->connect_error)
             {
                 echo "$conn->connect_error";
                 die("Connection Failed: ". $conn->connect_error);
-            } else 
+            } else
             {
-                $sql = "INSERT INTO info (firstname, lastname, middlename, username, password, cpassword, birthday, email, contact) 
-                VALUES ('$firstname','$lastname','$middlename','$username','$password','$cpassword', '$birthday', '$email', '$contact')";
-
-                $exec = mysqli_query($conn, $sql);
-                if ($exec)
+                if (strcmp($password, $cpassword) == 0)
                 {
-                    echo "<script>alert('Added Successfully!')</script>"; 
+                    $sql = "INSERT INTO info (firstname, lastname, middlename, username, password, birthday, email, contact, accesslvl, status) 
+                    VALUES ('$firstname','$lastname','$middlename','$username','$password', '$birthday', '$email', '$contact', '$accesslvl', '$status')";
+    
+                    $exec = mysqli_query($conn, $sql);
+                    if ($exec)
+                    {
+                        echo "<script>alert('Added Successfully!')</script>"; 
+                    } else
+                    {
+                        echo "<script>alert('Not Added.')</script>"; 
+                    }
                 } else
                 {
-                    echo "<script>alert('Error. Please try again!')</script>"; 
+                    echo "<script>alert('Password Does Not Match.')</script>"; 
                 }
-            }   
+            }
         }
     ?>
 </body>
