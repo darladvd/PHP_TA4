@@ -80,7 +80,7 @@
             }
             img{
                 float:right;
-                margin-right: 60px;
+                margin-right: 40px;
             }
         </style>
     </head>
@@ -121,9 +121,12 @@
                 echo "<img src='images/default.png' height='150' width='150'>";
             }
 
-            echo "<b>Welcome </b><br> &nbsp;&nbsp;".$data['username']." (".$data['accesslvl'].") <br>";
-            echo "<b>User Level: </b><br> &nbsp;&nbsp;".$data['accesslvl']."<br>";
-            echo "<b>Email: </b><br> &nbsp;&nbsp;".$data['email']."<br>";
+            echo "<b>Welcome </b>".$data['firstname']." ".$data['middlename']." ".$data['lastname']." <br>";
+            echo "<b>User Level: </b>".$data['accesslvl']."<br>";
+            echo "<b>Birthday: </b>".$data['birthday']."<br>";
+            echo "<b>Contact Details: </b><br>";
+            echo "<b>&nbsp;&nbsp; Contact: </b>".$data['contact']."<br>";
+            echo "<b>&nbsp;&nbsp; Email: </b>".$data['email']."<br>";
         }
 
         echo "<br>";
