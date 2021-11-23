@@ -34,15 +34,6 @@
 <body>
     <?php
     session_start();
-        // if (!isset($_SESSION['username']) || !isset($_SESSION['password']))
-        // {
-		// 	header("Location: login.php");
-		// }
-		// elseif ($_SESSION['userlevel'] == "user")
-        // {
-		// 	header("Location: user_home.php");
-		// }
-
         $username = $_SESSION['username'];
 
         $conn = mysqli_connect('localhost','root','','ta4');
