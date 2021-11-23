@@ -59,7 +59,7 @@
             {
                 echo "<table align='center' cellpadding = '5'>";
                 echo "<tr><td><h1>My Information</h1></td>";
-                echo "<td><p><a href='login.php'>Log-out</a></p></td></tr>";
+                echo "<td><p><a href='logout.php'>Log-out</a></p></td></tr>";
                 echo "<tr><td><p><b>Welcome</b> ".$row['firstname']." ".$row['middlename']." ".$row['lastname']."</p></td></tr>";
                 echo "<tr><td><p><b>Userlevel: </b> ".$row['accesslvl']."</p></td></tr>";
                 echo "<tr><td><p><b>Birthday: </b> ".$row['birthday']."</p></td></tr>";
