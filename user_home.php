@@ -49,12 +49,11 @@
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
-                background-color: #eabc81;
-                border-radius: 10px;
             }
 
             li{
-                float: left;
+                list-style-type:none;
+                float:left;
             }
 
             li a{
@@ -77,6 +76,8 @@
 
             .a1{
                 padding: 3px;
+                color:dimgray;
+                border-radius: 10px;
             }
             img{
                 float:right;
@@ -107,7 +108,7 @@
         echo "<h2>My Information</h2>";
         ?>
         
-        <li style='float:right; list-style-type:none;'><a href='logout.php' class='a1' style='color:dimgray; border-radius:10px;'><b><u>Log-out</u></b></a></li><br><br>
+        <li style='float:right; list-style-type:none;'><a href='logout.php' class='a1' style='color:dimgray; border-radius:10px;'><b><u>Log-out</u></b></a></li>
         <br>
 
         
@@ -130,78 +131,13 @@
 
         echo "<br><br>";
         ?>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
-        <br><br><input type="file" name="pic" id="pic" style="float:right; margin-right:-70px;"><br><br>
-        <button type="submit" name="upload" class="button" style="float:right; margin-right:90px;">Save Image</button>
-        <?php
-        if (isset($_POST['upload'])) {
 
-            $image = $_FILES['pic']['name'];
-            // image file directory
-            $target = "images/".basename($image);
-
-            $setpic = $conn->query("UPDATE info SET image='".$image."' WHERE username = '".$username."'");
-            // execute query
-
-            if (move_uploaded_file($_FILES['pic']['tmp_name'], $target)) {
-                $msg = "Image uploaded successfully";
-            }else{
-                $msg = "Failed to upload image";
-            }
-        }
-
-        ?>
-
-        </form>
-        <br><br><hr>
-        
-        <h3 style="text-align: center;">Reset Password</h3>
-        <table>
-            <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
-                <tr><td>Current Password: </td><td><input type="password" name="currpw" required>&nbsp;&nbsp;</td></tr>
-
-                <tr><td>Enter New Password: </td><td><input type="password" name="newpw" required>&nbsp;&nbsp;</td></tr>
-
-                <tr><td>Re-Enter New Password: </td><td><input type="password" name="confpw" required>&nbsp;&nbsp;</td></tr>
-
-                <tr><td><input type="submit" name="submit" value="Submit" class="button"></td></tr>
-            </form>
-        </table>
-        <br><br>
-
-        <?php
-        if(isset($_POST['submit'])){
-            if ($_SERVER["REQUEST_METHOD"] == "POST"){
-                $currpw = $_POST['currpw'];
-                $newpw = $_POST['newpw'];
-                $confpw = $_POST['confpw'];
-
-                $sql = mysqli_query($conn, "select password as pwchck from info where username='".$username."'");
-                
-                while($row = mysqli_fetch_array($sql)){
-                    if ($currpw == $row['pwchck']){
-                        if(strcmp($newpw,$confpw)==0){
-                            $update_pw = "UPDATE info SET password='$newpw' WHERE username = '$username'";
-                            if($conn->query($update_pw)){
-                                echo "Password has been updated successfully.";
-                            }
-                            else{
-                                echo "There was an error with updating your password. Please try again...";
-                            }
-                            $conn->close();
-                        }
-                        else{
-                            echo "New password and re-entered password should be the same. Please try again...";
-                        }
-                }
-                else{
-                    echo "Current password is not the same with the old password. Please try again...";
-                }
-            }
-            }
-        }
-        
-        ?>
+        <br><br><hr><br>
+        <ul>
+            <li><a href='user_image.php' class='a1'><b><u>Upload image</u>&nbsp;&nbsp;</b></a></li>
+            <li><a href='user_changepass.php' class='a1'><b><u>Reset my password</u></b></a></li><br><br>
+        </ul>
+        <br><hr><br>
         </div>
     </body>
 </html>
