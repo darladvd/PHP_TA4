@@ -122,7 +122,7 @@
             }
 
             echo "<b>Welcome </b>".$data['firstname']." ".$data['middlename']." ".$data['lastname']." <br>";
-            echo "<b>User Level: </b>".$data['accesslvl']."<br>";
+            echo "<b>Userlevel: </b>".$data['accesslvl']."<br>";
             echo "<b>Birthday: </b>".$data['birthday']."<br>";
             echo "<b>Contact Details: </b><br>";
             echo "<b>&nbsp;&nbsp; Contact: </b>".$data['contact']."<br>";

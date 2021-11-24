@@ -7,31 +7,95 @@
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Admin Panel</title>  
-    <style> 
-    h1, p
-    {
-        font-family: Montserrat, sans-serif;
-        text-align: left;
-    }
+    <style>
+            *{
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+            form{
+                margin:auto;
+            }
+            .normal{
+                margin: auto;
+            }
+            table, th, td{
+                margin-left: auto;
+                margin-right: auto;
+                padding: 5px;
+            }
+            table{
+                width: 500px;
+            }
 
-    table
-    {
-        font-family: Montserrat, sans-serif;      
-        height: 500px;
-        width: 500px;
-        border: 5px solid #1F4172;
-        border-radius: 4px;
-    }
+            div{
+                border: 5px solid white;
+                background-color: #bcd7ce;
+                width: 550px;
+                border-radius: 20px;
+                padding: 20px;
+                margin: auto;
+            }
+            hr{
+                border: 2px solid white;
+            }
+            .button{
+                background-color: #f0d2a2;
+                color: black;
+                padding: 5px 10px;
+                border-radius: 10px;
+                cursor: pointer;
 
-    img
-    {
-        height: 100px;
-        width: 100px;
-    }
-    </style>  
+            }
+            .button:hover{
+                background-color: #f5e8db;
+            }
+
+            ul{
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            li{
+                list-style-type:none;
+                float:left;
+            }
+
+            li a{
+                display: block;
+                color:antiquewhite;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            li a:hover:not(.active){
+                background-color: #DBD3BF;
+                color: #968477;
+            }
+
+            .active {
+                background-color: #97A69A;
+                color:antiquewhite
+            }
+
+            .a1{
+                padding: 3px;
+                color:dimgray;
+                border-radius: 10px;
+            }
+            img{
+                float:right;
+                margin-right: 40px;
+            }
+        </style>
 </head>
 
 <body>
+    <body bgcolor="#f5e8db">
+    <br><br>
+
+    <div>
     <?php
     session_start();
         $username = $_SESSION['username'];
@@ -47,28 +111,33 @@
             $sql = "SELECT * FROM info WHERE username = '$username'";
             $exec = mysqli_query($conn, $sql);
 
-            while($row = mysqli_fetch_array($exec))
+            while($data = mysqli_fetch_array($exec))
             {
-                echo "<table align='center' cellpadding = '5'>";
-                echo "<tr><td><h1>My Information</h1></td>";
-                echo "<td><p><a href='logout.php'>Log-out</a></p></td></tr>";
-                echo "<tr><td><p><b>Welcome</b> ".$row['firstname']." ".$row['middlename']." ".$row['lastname']."</p></td>";
-                echo "<td>";
-                    if($row['image']!=''){
-                        echo "<img src='images/".$data['image']."' height='150' width='150'>";
-                    }
-                    else{
-                        echo "<img src='images/default.png' height='150' width='150'>";
-                    }
-                echo "</td></tr>";
-                echo "<tr><td><p><b>Userlevel: </b> ".$row['accesslvl']."</p></td></tr>";
-                echo "<tr><td><p><b>Birthday: </b> ".$row['birthday']."</p></td></tr>";
-                echo "<tr><td><p><b>Contact Details</b></p></td></tr>";
-                echo "<tr><td><p><b>&nbsp;&nbsp;Contact: </b> ".$row['contact']."</p></td></tr>";
-                echo "<tr><td><p><b>&nbsp;&nbsp;Email: </b> ".$row['email']."</p></td></tr>";
-                echo "<tr><td><p>&nbsp;&nbsp;<a href='admin_image.php'>upload image</a></p></td><td><p><a href='admin_changepass.php'>reset my password</a></p></td></tr>";
-                echo "<tr><td><h2>-Records-</h2></td></tr>";
-                echo "<tr><td><p><a href='admin_adduser.php'>Add New User</a></p></td></tr>";
+                echo "<h1>My Information</h1>";
+                echo "<li style='float:right; list-style-type:none;'><a href='logout.php' class='a1' style='color:dimgray; border-radius:10px;'><b><u>Log-out</u></b></a></li><br>";
+                echo "<br><br>";
+                if($data['image']!=''){
+                    echo "<img src='images/".$data['image']."' height='150' width='150'>";
+                }
+                else{
+                    echo "<img src='images/default.png' height='150' width='150'>";
+                }
+                echo "<b>Welcome </b>".$data['firstname']." ".$data['middlename']." ".$data['lastname']." <br>";
+                echo "<b>Userlevel: </b>".$data['accesslvl']."<br>";
+                echo "<b>Birthday: </b>".$data['birthday']."<br>";
+                echo "<b>Contact Details: </b><br>";
+                echo "<b>&nbsp;&nbsp; Contact: </b>".$data['contact']."<br>";
+                echo "<b>&nbsp;&nbsp; Email: </b>".$data['email']."<br>";
+                echo "<br><br>";
+
+                echo "<br><br><hr><br>";
+                echo "<ul><li><a href='user_image.php' class='a1'><b><u>Upload image</u>&nbsp;&nbsp;</b></a></li>";
+                echo "<li><a href='user_changepass.php' class='a1'><b><u>Reset my password</u></b></a></li><br><br></ul>";
+                echo "<br><hr><br>";
+
+                echo "<h2>-Records-</h2>";
+                echo "<li><a href='admin_adduser.php' class='a1'><b><u>Add New User</u></b></a></li><br><br></ul>";
+                
 
                 $sql2 = "SELECT * FROM info;";
                 $exec2 = mysqli_query($conn,$sql2);
@@ -76,6 +145,7 @@
                 
                 if ($result > 0)
                 {
+                    echo "<table align='center' cellpadding = '5'>";
                     echo "<tr><td>ID</td><td>Email</td><td>Username</td><td>Password</td><td>Userlevel</td><td>Status</td></tr>";
                     while ($row = mysqli_fetch_assoc($exec2))
                     {
@@ -92,5 +162,6 @@
             }
         }
     ?>
+    </div>
 </body>
 </html>

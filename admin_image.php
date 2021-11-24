@@ -1,120 +1,164 @@
-<!DOCTYPE html>  
-<html>  
-<head>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Upload Image</title>
+        <style>
+            *{
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+            form{
+                margin:auto;
+            }
+            .normal{
+                margin: auto;
+            }
+            table, th, td{
+                margin-left: auto;
+                margin-right: auto;
+                padding: 5px;
+            }
+            table{
+                width: 400px;
+            }
 
-	 <!--  meta tags -->
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            div{
+                border: 5px solid white;
+                background-color: #bcd7ce;
+                width: 500px;
+                border-radius: 20px;
+                padding: 20px;
+                margin: auto;
+            }
+            hr{
+                border: 2px solid white;
+            }
+            .button{
+                background-color: #f0d2a2;
+                color: black;
+                padding: 5px 10px;
+                border-radius: 10px;
+                cursor: pointer;
 
-    <title>Admin Panel</title>  
-    <style> 
-    h1, p
-    {
-        font-family: Montserrat, sans-serif;
-        text-align: left;
-    }
+            }
+            .button:hover{
+                background-color: #f5e8db;
+            }
 
-    table
-    {
-        font-family: Montserrat, sans-serif;      
-        height: 500px;
-        width: 500px;
-        border: 5px solid #1F4172;
-        border-radius: 4px;
-    }
+            ul{
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #eabc81;
+                border-radius: 10px;
+            }
 
-    img
-    {
-        height: 100px;
-        width: 100px;
-    }
-    </style>  
-</head>
+            li{
+                float: left;
+            }
 
-<body>
-    <?php
-    session_start();
-        // if (!isset($_SESSION['username']) || !isset($_SESSION['password']))
-        // {
-		// 	header("Location: login.php");
-		// }
-		// elseif ($_SESSION['userlevel'] == "user")
-        // {
-		// 	header("Location: user_home.php");
-		// }
+            li a{
+                display: block;
+                color:antiquewhite;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
 
-        $username = $_SESSION['username'];
+            li a:hover:not(.active){
+                background-color: #DBD3BF;
+                color: #968477;
+            }
 
-        $conn = mysqli_connect('localhost','root','','ta4');
+            .active {
+                background-color: #97A69A;
+                color:antiquewhite
+            }
 
-        if($conn->connect_error)
-        {
+            .a1{
+                padding: 3px;
+            }
+            img{
+                float:right;
+                margin-right: 40px;
+            }
+        </style>
+    </head>
+    <body bgcolor="#f5e8db">
+
+    <br><br>
+
+        <div>
+        <?php
+        $conn = mysqli_connect('localhost', 'root', '', 'ta4');
+        if($conn->connect_error){
             echo "$conn->connect_error";
-            die("Connection Failed: ". $conn->connect_error);
-        } else 
-        {
-            $sql = "SELECT * FROM info WHERE username = '$username'";
-            $exec = mysqli_query($conn, $sql);
+            die("Connection Failed : ".$conn->connect_error);
+        }
+        session_start();
+        
+        if(!isset($_SESSION['username'])){
+            header('location: login.php');
+        }
+        $username = $_SESSION['username'];
+        $record = mysqli_query($conn, "select * from info where username = '$username'");
+        
+        
+        echo "<h2>My Information</h2>";
+        ?>
+        
+        <li style='float:right; list-style-type:none;'><a href='admin_home.php' class='a1' style='color:dimgray; border-radius:10px;'><b><u>Back</u></b></a></li><br><br>
+        <br>
 
-            while($row = mysqli_fetch_array($exec))
-            {
-                echo "<table align='center' cellpadding = '5'>";
-                echo "<tr><td><h1>My Information</h1></td>";
-                echo "<td><p><a href='admin_adduser.php'>Back</a></p></td></tr>";
-                echo "<tr><td><p><b>Welcome</b> ".$row['firstname']." ".$row['middlename']." ".$row['lastname']."</p></td>";
-                echo "<td>";
-                    if($row['image']!=''){
-                        echo "<img src='images/".$data['image']."' height='150' width='150'>";
-                    }
-                    else{
-                        echo "<img src='images/default.png' height='150' width='150'>";
-                    }
-                echo "<br>Preview</td></tr>";
-                echo "<tr><td><p><b>Userlevel: </b> ".$row['accesslvl']."</p></td></tr>";
-                echo "<tr><td><p><b>Birthday: </b> ".$row['birthday']."</p></td></tr>";
-                echo "<tr><td><p><b>Contact Details</b></p></td></tr>";
-                echo "<tr><td><p><b>&nbsp;&nbsp;Contact: </b> ".$row['contact']."</p></td></tr>";
-                echo "<tr><td><p><b>&nbsp;&nbsp;Email: </b> ".$row['email']."</p></td></tr>";
-                echo "<tr><td><h2>-Upload Image-</h2></td></tr>";
-                echo "<tr><td><input type='file' name='image'></td></tr><tr><td><input type = 'submit' name = 'save' value = 'Upload Images'></td></tr></form>";
-                    if (isset($_POST['save']) && isset($_FILES['image']))
-                    {
-                        $imgName = $_FILES['image']['name'];
-                        $imgSize = $_FILES['image']['size'];
-                        $tmpName = $_FILES['image']['tmp_name'];
-                        $error = $_FILES['image']['error'];
+        
 
-                        if ($error === 0){
-                            if ($imgSize > 5000000)
-                            {
-                                echo "Sorry, your file size is too large.";
-                            } else
-                            {
-                                $imgEx = pathinfo($imgName, PATHINFO_EXTENSION);
-                                $imgExLc = strtolower($imgEx);
-                                
-                                $allowed_exs = array("jpg", "jpeg", "png");
-                                
-                                if (in_array($imgExLc, $allowed_exs))
-                                {
-                                    $new_imgName = uniqid("IMG-", true).'.'.$imgExLc;
-                                    $img_upload_path = 'images/'.$new_imgName;
-                                    move_uploaded_file($tmpName, $img_upload_path);
-                                    
-                                    $exec2 = "UPDATE info SET image = '" . $new_imgName . "' WHERE username = '".$username."'"; 
-                                    mysqli_query($conn, $exec2);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            echo "Error.";
-                        }
-                    }
-                echo "</td></tr>";
-                echo "</table>";
+        <?php
+        while($data = mysqli_fetch_array($record)){
+            if($data['image']!=''){
+                echo "<img src='images/".$data['image']."' height='150' width='150'>";
+            }
+            else{
+                echo "<img src='images/default.png' height='150' width='150'>";
+            }
+
+            echo "<b>Welcome </b>".$data['firstname']." ".$data['middlename']." ".$data['lastname']." <br>";
+            echo "<b>Userlevel: </b>".$data['accesslvl']."<br>";
+            echo "<b>Birthday: </b>".$data['birthday']."<br>";
+            echo "<b>Contact Details: </b><br>";
+            echo "<b>&nbsp;&nbsp; Contact: </b>".$data['contact']."<br>";
+            echo "<b>&nbsp;&nbsp; Email: </b>".$data['email']."<br>";
+        }
+
+        echo "<br>";
+        ?>
+        <br><br><hr>
+        <h3>Upload Image</h3>
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
+        <input type="file" name="pic" id="pic" style="margin-left:150px;"><br><br>
+        <button type="submit" name="upload" class="button" style="margin-left:180px;">Upload Image</button>
+        <br>
+        <?php
+        if (isset($_POST['upload'])) {
+
+            $image = $_FILES['pic']['name'];
+            // image file directory
+            $target = "images/".basename($image);
+
+            $setpic = $conn->query("UPDATE info SET image='".$image."' WHERE username = '".$username."'");
+            // execute query
+
+            if (move_uploaded_file($_FILES['pic']['tmp_name'], $target)) {
+                $msg = "Image uploaded successfully";
+            }else{
+                $msg = "Failed to upload image";
             }
         }
-    ?>
-</body>
+
+        ?>
+
+        </form>
+        <br><br><hr>
+        
+        </div>
+    </body>
 </html>

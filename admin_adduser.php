@@ -7,37 +7,100 @@
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Add Record</title>  
-    <style> 
-    h1, p
-    {
-        font-family: Montserrat, sans-serif;
-        text-align: left;
-    }
+    <style>
+            *{
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+            form{
+                margin:auto;
+            }
+            .normal{
+                margin: auto;
+            }
+            table, th, td{
+                margin-left: auto;
+                margin-right: auto;
+                padding: 5px;
+            }
+            table{
+                width: 500px;
+            }
 
-    table
-    {
-        font-family: Montserrat, sans-serif;      
-        height: 200px;
-        width: 500px;
-        border: 5px solid #1F4172;
-        border-radius: 4px;
-    }
+            div{
+                border: 5px solid white;
+                background-color: #bcd7ce;
+                width: 550px;
+                border-radius: 20px;
+                padding: 20px;
+                margin: auto;
+            }
+            hr{
+                border: 2px solid white;
+            }
+            .button{
+                background-color: #f0d2a2;
+                color: black;
+                padding: 5px 10px;
+                border-radius: 10px;
+                cursor: pointer;
 
-    button
-    {
-        margin-left: 130px;
-        width: 200px;
-    }
-    </style>  
+            }
+            .button:hover{
+                background-color: #f5e8db;
+            }
+
+            ul{
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            li{
+                list-style-type:none;
+                float:left;
+            }
+
+            li a{
+                display: block;
+                color:antiquewhite;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            li a:hover:not(.active){
+                background-color: #DBD3BF;
+                color: #968477;
+            }
+
+            .active {
+                background-color: #97A69A;
+                color:antiquewhite
+            }
+
+            .a1{
+                padding: 3px;
+                color:dimgray;
+                border-radius: 10px;
+            }
+            img{
+                float:right;
+                margin-right: 40px;
+            }
+        </style>
 </head>
 
 <body>
+    <body bgcolor="#f5e8db">
+    <br><br>
+
+    <div>
     <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
     <?php
         session_start();
         echo "<table align='center' cellpadding = '10'>";
-        echo "<td><h1>Add User</h1></td>";
-        echo "<td><p><a href='admin_home.php'>Back</a></p></td>";
+        echo "<td><h1>Add User</h1></td><td><li style='float:right; list-style-type:none;'><a href='admin_home.php' class='a1' style='color:dimgray; border-radius:10px;'><b><u>Back</u></b></a></li><br><td>";
         echo "<tr><td><b>Fill Up Form</b></td></tr>";
         echo "<tr><td><p><b>First Name: <input type='text' name='firstname' required><br></b></p></td></tr>";
         echo "<tr><td><p><b>Middle Name: <input type='text' name='middlename' required><br></b></p></td></tr>";
@@ -50,7 +113,7 @@
         echo "<tr><td><p><b>Contact Number: <input type='number' name='contact' required><br></b></p></td></tr>";
         echo "<tr><td><p><b>Access Level: </b><input type='radio' name='accesslvl' id='admin' value='admin'><label for='admin'>admin</label><input type='radio' name='accesslvl' id='user' value='user'><label for='user'>user</label><br></p></td></tr>";
         echo "<tr><td><p><b>Status: </b><input type='radio' name='status' id='active' value='active'><label for='active'>active</label><input type='radio' name='status' id='disable' value='disable'><label for='disable'>disable</label><br></p></td></tr>";
-        echo "<tr><td><p><button type='submit'>Submit</button></td></tr>";
+        echo "<tr><td><input type='submit' name='submit' value='Submit' class='button'></td><tr>";
         echo "</table>";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -95,5 +158,6 @@
             }
         }
     ?>
+    </div>
 </body>
 </html>
