@@ -135,11 +135,12 @@
 
             $count = $data['usercnt'];
             if($count > 0){
-                $_SESSION['username'] = $p_un;
-                $_SESSION['loggedin'] = true;
                 $accstat = mysqli_query($conn, "select status as stat from info where username='".$p_un."'");
                 while($stat = mysqli_fetch_array($accstat)){
                     if($stat['stat'] == "active"){
+                        $_SESSION['username'] = $p_un;
+                        $_SESSION['loggedin'] = true;
+        
                         $level = mysqli_query($conn, "select accesslvl as lvl from info where username='".$p_un."'");
                         while($record = mysqli_fetch_array($level)){
                             if($record['lvl'] == "admin"){

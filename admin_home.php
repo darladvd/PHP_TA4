@@ -131,8 +131,8 @@
                 echo "<br><br>";
 
                 echo "<br><br><hr><br>";
-                echo "<ul><li><a href='user_image.php' class='a1'><b><u>Upload image</u>&nbsp;&nbsp;</b></a></li>";
-                echo "<li><a href='user_changepass.php' class='a1'><b><u>Reset my password</u></b></a></li><br><br></ul>";
+                echo "<ul><li><a href='admin_image.php' class='a1'><b><u>Upload image</u>&nbsp;&nbsp;</b></a></li>";
+                echo "<li><a href='admin_changepass.php' class='a1'><b><u>Reset my password</u></b></a></li><br><br></ul>";
                 echo "<br><hr><br>";
 
                 echo "<h2>-Records-</h2>";
